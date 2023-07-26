@@ -26,9 +26,11 @@ function GameScreen({userNumber, onGameOver}) {
     const [currentCuess, setCurrentGuess] = useState(initialGuess);
     const [guessRounds, setGuessRounds] = useState([initialGuess])
 
+    const guessRoundsListLength = guessRounds.length;
+
     useEffect(() => {
         if (currentCuess === userNumber) {
-            onGameOver();
+            onGameOver(guessRoundsListLength);
         }
     }, [currentCuess, userNumber, onGameOver])
 
@@ -56,8 +58,6 @@ function GameScreen({userNumber, onGameOver}) {
         setCurrentGuess(newRndNumber);
         setGuessRounds(prevGuessRounds => [newRndNumber, ...prevGuessRounds])
     }
-
-    const guessRoundsListLength = guessRounds.length;
     
     return (
        <View style={styles.screen}>
@@ -78,8 +78,7 @@ function GameScreen({userNumber, onGameOver}) {
                 </View>
             </View> 
         </Card>
-        <View>
-            {/* {guessRounds.map((guessRound) => <Text key={guessRound}>{guessRound}</Text>)} */}
+        <View style={styles.listContainer}>
             <FlatList 
                 data={guessRounds} 
                 renderItem={(itemData) => <GuessLogItem roundNumber={guessRoundsListLength - itemData.index} guess={itemData.item}/>}
@@ -106,4 +105,8 @@ const styles = StyleSheet.create({
     instructionText: {
         marginBottom: 12,
     },
+    listContainer: {
+        flex: 1,
+        padding: 16,
+    }
 });
