@@ -6,7 +6,9 @@ import { useState } from 'react';
 import Colors from './constants/colors';
 import GameOverScreen from './screens/GameOverScreen';
 import { useFonts } from 'expo-font';
-import { AppLoading } from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
@@ -18,8 +20,8 @@ export default function App() {
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   })
 
-  if(!fontsLoaded) {
-    return <AppLoading/>;
+  if(fontsLoaded) {
+    SplashScreen.hideAsync();
   }
 
   function pickedNumberHandler(pickedNumber) {
